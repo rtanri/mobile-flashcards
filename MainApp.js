@@ -16,12 +16,12 @@ const RouteConfigs = {
     Home: {
         name:"Home",
         component: Home,
-        options:{title: "Decks"}
+        options:{tabBarIcon: ({tintColor}) => <FontAwesome name="list-alt" size={24} color={tintColor} /> ,title: "Decks"}
     },
     AddDecks: {
         name:"Add Decks",
         component: AddDecks,
-        option:{title: "Add Decks"}
+        option:{tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={24} color={tintColor} /> ,title: "Add Decks"}
     }
 }
 
