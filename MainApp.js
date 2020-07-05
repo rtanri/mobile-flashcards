@@ -6,7 +6,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {Ionicons, FontAwesome} from '@expo/vector-icons'
 
 import Home from './components/Home'
-import AddDecks from './components/AddDecks'
+import AddDeck from './components/AddDeck'
 
 import {white, purple} from './utils/colors'
 
@@ -16,12 +16,16 @@ const RouteConfigs = {
     Home: {
         name:"Home",
         component: Home,
-        options:{tabBarIcon: ({tintColor}) => <FontAwesome name="list-alt" size={24} color={tintColor} /> ,title: "Decks"}
+        options:{tabBarIcon: ({tintColor}) => 
+          <FontAwesome name="list" size={24} color={tintColor} /> ,
+          title: "Decks"}
     },
     AddDecks: {
-        name:"Add Decks",
-        component: AddDecks,
-        option:{tabBarIcon: ({tintColor}) => <FontAwesome name="plus-square" size={24} color={tintColor} /> ,title: "Add Decks"}
+        name:"Add Deck",
+        component: AddDeck,
+        options:{tabBarIcon: ({tintColor}) => 
+          <FontAwesome name="plus-square" size={24} color={tintColor} /> ,
+          title: "AddDeck"}
     }
 }
 

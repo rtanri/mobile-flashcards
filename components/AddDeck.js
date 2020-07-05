@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native'
 import {white, gray} from '../utils/colors'
 
 
-export default class AddDecks extends Component {
+export default class AddDeck extends Component {
     render(){
         return(
             <View style={styles.container}>
