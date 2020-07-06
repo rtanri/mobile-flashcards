@@ -4,8 +4,8 @@ import MainApp from './MainApp';
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <MainApp />
-    </SafeAreaProvider>
+      <SafeAreaProvider>
+        <MainApp />
+      </SafeAreaProvider>
   );
 }

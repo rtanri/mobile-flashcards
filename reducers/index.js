@@ -1,21 +1,36 @@
-  
-import { GET_ALL_DECKS, ADD_DECK, GET_DECK, ADD_CARD } from '../utils/helpers'
+import { ADD_DECK, RECEIVE_DECKS, ADD_CARD } from '../actions'
 
-function deckReducer(state = {}, action) {
-  switch (action.type) {
-    case GET_ALL_DECKS:
-      return {
-        ...state,
-        ...action.decks
-      }
-    case ADD_DECK:
-      return {
-        ...state,
-        [action.deck.id]: action.deck
-      }
-    default:
-        return state
-  }
+function decks (state={}, action){
+    switch (action.type){
+        case RECEIVE_DECKS:
+            return {
+                ...state,
+                ...action.decks
+            }
+        case ADD_DECK :
+            const { deck } = action
+            return {
+                ...state,
+                decks:{
+                    ...state.decks,
+                    [deck.title]: deck
+                }
+            }
+        case ADD_CARD:
+            const { card, title } = action
+            return{
+                ...state,
+                decks:{
+                    ...state.decks,
+                    [title]:{
+                        title: title,
+                        questions: state.decks[title].questions.concat([card])
+                    }
+                }
+            }
+        default:
+            return state
+    }
 }
 
-export default decksReducer
+export default decks 

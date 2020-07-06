@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text} from 'react-native'
 
-const QuizStart = () => {
+const Quiz = () => {
     return(
         <View>
             <Text>Quiz Page</Text>
@@ -9,4 +9,4 @@ const QuizStart = () => {
     )
 }
 
-export default QuizStart
+export default Quiz
