@@ -10,157 +10,181 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import { addCard } from '../actions';
+import {addCardToDeck} from '../utils/api';
+import CustomBtn from './CustomBtn';
+import RadioForm from 'react-native-simple-radio-button';
+import { FontAwesome } from '@expo/vector-icons'
 
-import { saveCardToDeckAction } from '../actions';
+import { white, gray, purple, red, lightPurp, orange } from '../utils/colors';
 
-import { white, gray, purple, black, lightPurp } from '../utils/colors';
 
-class AddCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      question: '',
-      answer: '',
-    };
-  }
+// Options for our radio button
+const answer_option = [
+  {label: 'False', value: 0},
+  {label: 'True', value: 1}
+];
 
-  onChangeQuestion = (text) => this.setState({ question: text });
-
-  onChangeAnswer = (text) => this.setState({ answer: text });
-
-  handleSubmit = async () => {
-    const { id, title } = this.props.route.params;
-    await this.props.saveCardToDeckAction(
-      id,
-      this.state.question,
-      this.state.answer
-    );
-
-    // Route to Individual Deck Screen
-    this.props.navigation.push('DeckDetail', {
-      id,
-      title,
-    });
-
-    this.setState({
-      question: '',
-      answer: '',
+class AddCard extends Component{
+  state = {
+    front:'',
+    back: '',
+    answerOption: null,
+  };
+  setTitle = (cardTitle) =>{
+    this.props.navigation.setOptions({
+      title: cardTitle+' Add Card'
     });
   };
+  handleOnchange = (input, flag) =>{
+    if(flag === 'front'){
+      this.setState({
+        front: input
+      });
+    }else if(flag === 'back'){
+      this.setState({
+        back: input
+      });
+    }else if (flag === 'radio'){
+      this.setState({
+        answerOption: input.id
+      });
+        
+    }
+  };
+  handleSubmit = () =>{
+    const { dispatch, route, navigation } = this.props;
+    const { front, back, answerOption } = this.state;
+    const { deckId } = route.params;
+    
+    const card = {
+      question: front,
+      answer: back,
+      correctAns: answerOption ? 'true': 'false'
+    };
+
+    // Update redux
+    dispatch(addCard(card, deckId));
+
+    // save to AsyncStorage
+    addCardToDeck(card, deckId);
+
+    // Navigate to DeckSetting
+    navigation.navigate(
+      "DeckSetting",
+      {title: deckId}
+    );
+      
+  };
+
 
   render() {
-    const { question, answer } = this.state;
+    const { front, back, answerOption } = this.state;
+    const { title } = this.props;
+    const disabled = front.length === 0 || back.length === 0 || answerOption === null;
+    this.setTitle(title);
+
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <View style={[styles.center, { justifyContent: 'flex-start' }]}>
-          <Text style={styles.cardTitle}>
-            What are the question and answer of your new card?
-          </Text>
-          <TextInput
-            style={{
-              height: 40,
-              borderColor: 'gray',
-              borderWidth: 1,
-              color: black,
-            }}
-            onChangeText={(text) => this.onChangeQuestion(text)}
-            value={question}
-            placeholder='Fill in the question'
-          />
-          <View style={{ marginBottom: 30 }} />
-          <TextInput
-            style={{
-              height: 40,
-              borderColor: 'gray',
-              borderWidth: 1,
-              color: black,
-            }}
-            onChangeText={(text) => this.onChangeAnswer(text)}
-            value={answer}
-            placeholder='Fill in the answer'
-          />
-        </View>
-        <View style={[styles.center, { justifyContent: 'center' }]}>
-          <TouchableOpacity
-            style={
-              Platform.OS === 'ios'
-                ? [
-                    styles.iosButton,
-                    { backgroundColor: black, borderColor: gray },
-                  ]
-                : [
-                    styles.androidButton,
-                    { backgroundColor: black, borderColor: gray },
-                  ]
-            }
+      <View style={{flex: 1, backgroundColor: orange}} >
+        <KeyboardAvoidingView style={styles.container}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.label}>Front</Text>
+          </View>
+          <View style={{ flexDirection: 'row', height: 40}}>
+            <TextInput
+              style={styles.input}
+              value={front}
+              onChangeText={(input) => this.handleOnchange(input, 'front')}
+            />
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.label}>Back</Text>
+          </View>
+          <View style={{ flexDirection: 'row', height: 40}}>
+            <TextInput
+              style={styles.input}
+              value={back}
+              onChangeText={(input) => this.handleOnchange(input, 'back')}
+            />
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.labelans}>Is this true or false?</Text>
+          </View>
+          <View style={{ flexDirection: 'row', height: 40}}>
+              <RadioForm
+                radio_props={answer_option}
+                initial={-1}
+                formHorizontal={true}
+                labelHorizontal={false}
+                buttonColor= { white }
+                labelStyle={{color: purple}}
+                animation={true}
+                onPress={(value) => this.handleOnchange(value, 'radio')} />
+          </View>
+          <CustomBtn 
             onPress={this.handleSubmit}
-            disabled={question === '' || answer === ''}
-          >
-            <Text style={[styles.btnText, { color: white }]}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-    </KeyboardAvoidingView>
+            disabled= {disabled? true: false} 
+            text="Submit"/>
+
+          {disabled
+            ? (
+                <View style={{flexDirection:'row', flexWrap:'wrap', margin:3, padding:5}}>
+                    <FontAwesome name='warning' size={15} color={red} />
+                    <Text style={{color:red}}>
+                    Please fill all fields
+                    </Text>
+                </View>
+            )
+            : null
+          }
+        </KeyboardAvoidingView>    
+      </View>
+      
     );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  saveCardToDeckAction: (id, question, answer) =>
-    dispatch(saveCardToDeckAction(id, question, answer)),
-});
-
-export default connect(null, mapDispatchToProps)(AddCard);
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: lightPurp,
-    justifyContent: 'space-around',
-  },
-  cardTitle: {
-    fontSize: 20,
-    paddingTop: 20,
-    paddingBottom: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  cardDesc: {
-    fontSize: 16,
-    paddingBottom: 20,
-    color: gray,
-    textAlign: 'center',
-  },
-
-  iosButton: {
-    padding: 10,
-    borderRadius: 10,
-    height: 50,
-    marginLeft: 40,
-    marginRight: 40,
-    borderWidth: 1,
-  },
-  androidButton: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 50,
-    borderRadius: 4,
-    justifyContent: 'center',
+    
     alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+  label: {
+    flex: 0.8,
+    fontSize: 20,
+    fontWeight: '500',
+    color: purple,
+    marginTop: 40,
+    marginBottom: 10,
+    alignItems: 'flex-start'
+  },
+  labelans:{
+    alignItems: 'center', 
+    justifyContent: 'center',
+    fontSize: 20,
+    fontWeight: '500',
+    color: purple,
+    marginTop: 8,
+    marginBottom:10
+  },
+  input: {
+    flex: 0.8,
+    alignItems: 'center',
+    borderRadius: 2,
     borderWidth: 1,
-  },
-  btnText: {
-    fontSize: 18,
-    textAlign: 'center',
-  },
-  center: {
-    flex: 1,
-    marginLeft: 30,
-    marginRight: 30,
+    borderColor: gray,
+    paddingLeft: 5,
+    backgroundColor: white,
   },
 });
+
+
+function mapStateToProps(_, { route} ){
+  const {deckId } = route.params
+  return{
+      title: deckId
+  }
+};
+export default connect(mapStateToProps)(AddCard);

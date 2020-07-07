@@ -1,9 +1,10 @@
-import { getDecks, saveNewDeck } from '../utils/api'
+import { getDecks, saveNewDeck, removeDeck } from '../utils/api'
 
 
 export const ADD_DECK = 'ADD_DECK'
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_CARD = 'ADD_CARD'
+export const REMOVE_DECK = 'REMOVE_DECK'
 
 export function addDeck (deck){
     return {
@@ -27,6 +28,16 @@ export function receiveDecks (decks){
     }
 }
 
+export function removeDeckAction(id) {
+    return async (dispatch) => {
+        await removeDeck(id);
+        dispatch({
+            type: REMOVE_DECK,
+            id,
+        })
+    }
+}
+
 export function handleAddDeck(deck){
     return (dispatch) =>{
         dispatch(addDeck(deck))
@@ -43,3 +54,9 @@ export function handleInitialData(){
             })
     }
 }
+
+// export function clearInitialDecks () {
+//     return {
+//       type: CLEAR_DECKS,
+//     }
+// }

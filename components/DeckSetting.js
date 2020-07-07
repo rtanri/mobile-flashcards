@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { FontAwesome } from '@expo/vector-icons'
+import { removeDeckAction } from '../actions/index'
 
 import { purple, white, orange, red } from '../utils/colors'
 import CustomBtn from './CustomBtn'
@@ -13,6 +14,12 @@ class DeckSetting extends Component{
         this.props.navigation.setOptions({
             title: deckTitle + ' Deck'
         })
+    }
+
+    deleteDeck = async(id) => {
+        await this.props.removeDeckAction(id);
+        this.props.fetchAllDecksAction();
+        this.props.navigation.navigate('Home', {screen: 'DeckList'})
     }
 
     render(){
@@ -35,6 +42,10 @@ class DeckSetting extends Component{
                         )}
                     disabled= {questions.length === 0? true: false} 
                     text="Start Quiz"/>
+                
+                <TouchableOpacity onPress={() => this.deleteDeck(title)}>
+                    <Text style={styles.deleteBtnText}>Delete Deck</Text>
+                </TouchableOpacity>
 
                 {questions.length === 0
                 ? (
@@ -77,6 +88,12 @@ const styles = StyleSheet.create({
     btnTextDark: {
         color: purple,
         fontWeight: '500',
+    },
+    deleteBtnText: {
+        marginTop: 30,
+        marginBottom: 30,
+        fontSize: 18,
+        color: purple,
     }
   })
 
