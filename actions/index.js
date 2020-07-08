@@ -55,8 +55,3 @@ export function handleInitialData(){
     }
 }
 
-// export function clearInitialDecks () {
-//     return {
-//       type: CLEAR_DECKS,
-//     }
-// }

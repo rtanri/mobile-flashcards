@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native
 import { connect } from 'react-redux'
 import { FontAwesome } from '@expo/vector-icons'
 import { removeDeckAction } from '../actions/index'
+import {removeDeck, getDecks} from '../utils/api'
 
 import { purple, white, orange, red } from '../utils/colors'
 import CustomBtn from './CustomBtn'
@@ -17,9 +18,12 @@ class DeckSetting extends Component{
     }
 
     deleteDeck = async(id) => {
-        await this.props.removeDeckAction(id);
-        this.props.fetchAllDecksAction();
-        this.props.navigation.navigate('Home', {screen: 'DeckList'})
+        const {removeDeck, getDecks} = this.props;
+        removeDeckAction(id);
+        getDecks();
+        // await this.props.removeDeck(id);
+        // this.props.getDecks();
+        this.props.navigation.navigate('Home', {screen: 'Home'})
     }
 
     render(){
