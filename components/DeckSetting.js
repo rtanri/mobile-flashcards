@@ -18,11 +18,9 @@ class DeckSetting extends Component{
     }
 
     deleteDeck = async(id) => {
-        const {removeDeck, getDecks} = this.props;
+        const {removeDeck } = this.props;
         removeDeckAction(id);
         getDecks();
-        // await this.props.removeDeck(id);
-        // this.props.getDecks();
         this.props.navigation.navigate('Home', {screen: 'Home'})
     }
 
