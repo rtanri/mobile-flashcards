@@ -14,29 +14,35 @@ import { clearLocalNotification, setLocalNotification } from '../utils/helper';
 
 
 class Quiz extends Component {
+
+  //Create the animation value before the component is created
   UNSAFE_componentWillMount() {
-    this.animatedValue = new Animated.Value(0);
-    this.value = 0;
-    this.animatedValue.addListener(({ value }) => {
-      this.value = value;
-    })
+    this.animatedValue = new Animated.Value(0)
+    this.value = 0
+    this.animatedValue.addListener(({ value }) => { this.value = value})
+
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['0deg', '180deg'],
     })
+
     this.backInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg']
     })
+
     this.frontOpacity = this.animatedValue.interpolate({
       inputRange: [89, 90],
       outputRange: [1, 0]
     })
+    
     this.backOpacity = this.animatedValue.interpolate({
       inputRange: [89, 90],
       outputRange: [0, 1]
     })
   };
+
+
   state ={
     isLastCard: false,
     cardIdx: 0,
@@ -50,7 +56,8 @@ class Quiz extends Component {
       Animated.spring(this.animatedValue,{
         toValue: 0,
         friction: 8,
-        tension: 10
+        tension: 10,
+        useNativeDriver: true,
       }).start();
       this.setState({
         flipSide: 'Back'
@@ -59,7 +66,8 @@ class Quiz extends Component {
       Animated.spring(this.animatedValue,{
         toValue: 180,
         friction: 8,
-        tension: 10
+        tension: 10,
+        useNativeDriver: true,
       }).start();
       this.setState({
         flipSide: 'Front'
@@ -79,8 +87,16 @@ class Quiz extends Component {
         score:  isCorrect ? recentState.score + 1: recentState.score
       }));
       Animated.sequence([
-        Animated.timing(bounceScore, {duration:200, toValue:2.04}),
-        Animated.spring(bounceScore, {toValue:1, friction:4})
+        Animated.timing(bounceScore, {
+          duration:200,
+          toValue:2.04,
+          useNativeDriver: true,
+        }),
+        Animated.spring(bounceScore, {
+          toValue:1,
+          friction:4,
+          useNativeDriver: true,
+        })
       ]).start();
 
       // Clear local notification at the end of a completed quiz
@@ -134,34 +150,42 @@ class Quiz extends Component {
         {!isLastCard
         ?(
           <View style={{marginTop:-70}}>
+
               <View style={styles.indexContainer}>
                 <Text style={{color: white}}>{`${cardIdx + 1} / ${questions.length}`}</Text>
               </View>  
-              <View style={styles.container}>
-              <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-                <Text style={styles.flipTextFront}>
-                  {questions[cardIdx].question}
-                </Text>
-              </Animated.View >
-              <Animated.View  style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
-                <Text style={styles.flipTextBack}>
-                  {questions[cardIdx].answer}
-                </Text>
-              </Animated.View >
-              <TouchableOpacity onPress={()=> this.flipCard()}>
-                <Text style={{textDecorationLine: 'underline', color: red}}>
-                  Flip {flipSide}!
-                </Text>
-              </TouchableOpacity>
 
-              <View style={[{marginTop: 30}]}>
-                <TouchableOpacity style={[styles.btn, styles.btnCorrect]} onPress={() => this.handleSelectClick('true')}>
-                  <Text style={styles.btnText}>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.btn, styles.btnInCorrect]} onPress={() => this.handleSelectClick('false')}>
-                  <Text style={styles.btnText}>Incorrect</Text>
-                </TouchableOpacity>
-              </View>
+              <View style={styles.container}>
+
+                  <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
+                    <Text style={styles.flipTextFront}>
+                      {questions[cardIdx].question}
+                    </Text>
+                  </Animated.View >
+
+                  <Animated.View  style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
+                    <Text style={styles.flipTextBack}>
+                      {questions[cardIdx].answer}
+                    </Text>
+                  </Animated.View >
+                  
+                  <TouchableOpacity onPress={()=> this.flipCard()}>
+                    <Text style={{textDecorationLine: 'underline', color: red}}>
+                      Flip {flipSide}!
+                    </Text>
+                  </TouchableOpacity>
+
+                <View style={[{marginTop: 30}]}>
+
+                  <TouchableOpacity style={[styles.btn, styles.btnCorrect]} onPress={() => this.handleSelectClick('true')}>
+                    <Text style={styles.btnText}>Correct</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={[styles.btn, styles.btnInCorrect]} onPress={() => this.handleSelectClick('false')}>
+                    <Text style={styles.btnText}>Incorrect</Text>
+                  </TouchableOpacity>
+
+                </View>
               </View>
           </View>
 

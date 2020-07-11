@@ -99,7 +99,8 @@ export async function removeDeck(id) {
     const decks = await AsyncStorage.getItem(DECKS_STORAGE);
   
     const filteredDecks = JSON.parse(decks).filter((deck) => deck.id !== id);
-  
+    //Add console.log to check the value of filteredDecks
+    console.log(filteredDecks) 
     AsyncStorage.setItem(DECKS_STORAGE, JSON.stringify(filteredDecks));
 
     return;

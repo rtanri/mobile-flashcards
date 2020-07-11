@@ -21,22 +21,37 @@ export function addCard (card, title){
     }
 }
 
-export function receiveDecks (decks){
-    return{
+export function receiveDecks (decks) {
+    return {
         type: RECEIVE_DECKS,
         decks,
     }
 }
 
-export function removeDeckAction(id) {
-    return async (dispatch) => {
-        await removeDeck(id);
-        dispatch({
-            type: REMOVE_DECK,
-            id,
-        })
+//Set action to removeDeck
+export function removeDeckAction (id) {
+    return {
+        type: REMOVE_DECK,
+        id,
     }
 }
+
+//dispatch remove function to reducers
+export function handleRemoveDeck(id){
+    return (dispatch) =>{
+        dispatch(removeDeckAction(id));
+    }
+}
+
+// export function removeDeckAction(id) {
+//     return (dispatch) => {
+//         // await removeDeck(id);
+//         dispatch({
+//             type: REMOVE_DECK,
+//             id,
+//         })
+//     }
+// }
 
 export function handleAddDeck(deck){
     return (dispatch) =>{

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { FontAwesome } from '@expo/vector-icons'
-import { removeDeckAction } from '../actions/index'
-import {removeDeck, getDecks} from '../utils/api'
+import { handleRemoveDeck } from '../actions/index'
+import { getDecks } from '../utils/api'
 
 import { purple, white, orange, red } from '../utils/colors'
 import CustomBtn from './CustomBtn'
@@ -17,15 +17,16 @@ class DeckSetting extends Component{
         })
     }
 
-    deleteDeck = async(id) => {
-        const {removeDeck } = this.props;
-        removeDeckAction(id);
+    deleteDeck = (id) => {
+        this.props.dispatch(handleRemoveDeck(id));
         getDecks();
         this.props.navigation.navigate('Home', {screen: 'Home'})
     }
 
     render(){
         const { questions, title, navigation } = this.props
+        if (!questions) return null;
+
         this.setTitle(title) 
         return(
             <View style={styles.container}>
@@ -45,7 +46,7 @@ class DeckSetting extends Component{
                     disabled= {questions.length === 0? true: false} 
                     text="Start Quiz"/>
                 
-                <TouchableOpacity onPress={() => this.deleteDeck(title)}>
+                <TouchableOpacity onPress={() => this.deleteDeck(title) }>
                     <Text style={styles.deleteBtnText}>Delete Deck</Text>
                 </TouchableOpacity>
 
@@ -102,9 +103,12 @@ const styles = StyleSheet.create({
 
 function mapStateToProps({ decks }, { route} ){
     const { title } = route.params
+    // debugger
     return{
         title,
-        questions : decks[title].questions
+        //After we delete the particular deck with 'id' we want, 
+        //we need to handle error the deleted-deck on recalling questions - by adding empty Object
+        questions : (decks[title] || {}).questions
     }
 }
 
