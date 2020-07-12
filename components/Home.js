@@ -14,7 +14,7 @@ class Home extends Component{
     };
 
     render(){
-        const { decks, isDummyData, navigation } = this.props;
+        const { decks, navigation } = this.props;
         return(
             <ScrollView style={styles.container}>
                 {decks && Object.keys(decks).map((key) =>{
@@ -30,15 +30,7 @@ class Home extends Component{
                             count={questions.length} />
                     </TouchableOpacity>)
                 })}
-{/*                 
-                {!isDummyData
-                ? (
-                    <TouchableOpacity onPress={this.clear}>
-                        <Text style={styles.resetTxt}>RESET</Text>
-                    </TouchableOpacity>
-                    )
-                : null
-                } */}
+
             </ScrollView>
         );
     };
@@ -61,7 +53,6 @@ const styles = StyleSheet.create({
 function mapStateToProps ({decks}){
     return{
         decks,
-        isDummyData: decks && Object.keys(decks).length === 3,
     };
 };
 

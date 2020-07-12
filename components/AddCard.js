@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import { addCard } from '../actions';
 import {addCardToDeck} from '../utils/api';
-import CustomBtn from './CustomBtn';
+import TouchButton from './TouchButton';
 import RadioForm from 'react-native-simple-radio-button';
 import { FontAwesome } from '@expo/vector-icons'
 
@@ -79,6 +79,7 @@ class AddCard extends Component{
 
 
   render() {
+    // if(!deckId)
     const { front, back, answerOption } = this.state;
     const { title } = this.props;
     const disabled = front.length === 0 || back.length === 0 || answerOption === null;
@@ -121,7 +122,7 @@ class AddCard extends Component{
                 animation={true}
                 onPress={(value) => this.handleOnchange(value, 'radio')} />
           </View>
-          <CustomBtn 
+          <TouchButton
             onPress={this.handleSubmit}
             disabled= {disabled? true: false} 
             text="Submit"/>
@@ -183,6 +184,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(_, { route} ){
   const {deckId } = route.params
+  debugger
   return{
       title: deckId
   }

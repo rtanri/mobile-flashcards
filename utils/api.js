@@ -3,23 +3,29 @@ import { AsyncStorage } from 'react-native'
 export const DECK_STORAGE = 'Flashcards:decks'
 
 const decks = {
-    React: {
+    Food: {
         id: 'loxhs1bqm25b708cmbf3g',
         title: 'Food',
         questions: [
         {
             id: '8xf0y6ziyjabvozdd253nd',
-            question: 'What does the secret of KFC Chicken tasted so good?',
+            question: 'The Reason KFC Fried Chicken is so tasty is 11 Secret Herb and Spices',
             answer: '11 Secret Herb and Spices',
             correctAns: 'true'
         },
         {
             id: '6ni6ok3ym7mf1p33lnez',
-            question: 'What is the most favourite McDonalds Burger in Singapore?',
-            answer:  'Double McSpicy',
+            question: 'Double McSpicy is the most favourite McDonalds Burger',
+            answer:  'Double McSpicy has been sold the most for the past 15 years',
+            correctAns: 'true'
+        },
+        {
+            id: 'is87yk3ym7mf1p33lnez',
+            question: 'Subway can help Obese to lose weight',
+            answer:  'Doctors like to recommend Obese to try Subway 30-days Challenge',
             correctAns: 'true'
         }
-        ]
+    ]
     },
     BubbleTea: {
         id: 'vthrdm985a262al8qx3do',
@@ -27,9 +33,15 @@ const decks = {
         questions: [
         {
             id: 'am8ehyc8byjqgar0jgpub9',
-            question: 'Which year does LIHO shop open?',
-            answer: 'Established in 2017 by Royal T Group',
-            correctAns: 'true'
+            question: 'LIHO Bubble tea shop was established in 2001',
+            answer: 'LIHO Bubble tea was established in 2017 by Royal T Group',
+            correctAns: 'false'
+        },
+        {
+            id: 'lok01k3ym7mf1p33lnez',
+            question: "The pearl in bubble tea contained the real clam's pearl.",
+            answer:  'The ingredients are corn starch, brown sugar and water',
+            correctAns: 'false'
         }
         ]
     }

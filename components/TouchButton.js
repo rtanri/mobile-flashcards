@@ -3,7 +3,7 @@ import { Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 
 import { purple, lightPurp, gray, white} from '../utils/colors'
 
-const CustomBtn = ({ onPress, disabled, text }) => {
+const TouchButton = ({ onPress, disabled, text }) => {
     return(
         <TouchableOpacity 
             style={[Platform.OS === 'ios'
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CustomBtn 
+export default TouchButton 

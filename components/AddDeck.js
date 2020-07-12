@@ -8,7 +8,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { handleAddDeck } from '../actions'
 
 import { purple, white, gray, orange, blue } from '../utils/colors'
-import CustomBtn from './CustomBtn'
+import TouchButton from './TouchButton'
 
 
 class NewDeck extends Component{
@@ -54,7 +54,7 @@ class NewDeck extends Component{
                     onChangeText={this.handleInputChange}
                     />
                 </View>
-                <CustomBtn
+                <TouchButton
                     onPress={this.submitDeck}
                     disabled={input.length ===0? true : false} 
                     text="Create Deck"/>

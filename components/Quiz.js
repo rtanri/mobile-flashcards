@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { blue, purple, orange, white, red } from '../utils/colors';
+import { blue, purple, darkorange, orange, green, gray, white, red } from '../utils/colors';
 import { clearLocalNotification, setLocalNotification } from '../utils/helper';
 
 
@@ -57,7 +57,7 @@ class Quiz extends Component {
         toValue: 0,
         friction: 8,
         tension: 10,
-        useNativeDriver: true,
+        useNativeDriver: true, //Add this to keep the setting userNativeDriver to "true", and avoid warning
       }).start();
       this.setState({
         flipSide: 'Back'
@@ -67,7 +67,7 @@ class Quiz extends Component {
         toValue: 180,
         friction: 8,
         tension: 10,
-        useNativeDriver: true,
+        useNativeDriver: true,//Add this to keep the setting userNativeDriver to "true", and avoid warning
       }).start();
       this.setState({
         flipSide: 'Front'
@@ -90,19 +90,19 @@ class Quiz extends Component {
         Animated.timing(bounceScore, {
           duration:200,
           toValue:2.04,
-          useNativeDriver: true,
+          useNativeDriver: true, //Add this to keep the setting userNativeDriver to "true", and avoid warning
         }),
         Animated.spring(bounceScore, {
           toValue:1,
           friction:4,
-          useNativeDriver: true,
+          useNativeDriver: true, //Add this to keep the setting userNativeDriver to "true", and avoid warning
         })
       ]).start();
 
       // Clear local notification at the end of a completed quiz
       clearLocalNotification()
         .then(setLocalNotification);
-    }else{
+    } else {
       this.setState((recentState) =>({
         cardIdx : recentState.cardIdx + 1,
         flipSide: 'Front',
@@ -135,12 +135,12 @@ class Quiz extends Component {
     
     const frontAnimatedStyle = {
       transform: [
-        { rotateY: this.frontInterpolate }
+        { rotateX: this.frontInterpolate }
       ]
     }
     const backAnimatedStyle = {
       transform: [
-        { rotateY: this.backInterpolate }
+        { rotateX: this.backInterpolate }
       ]
     }
     this.setTitle(deck.title);
@@ -151,8 +151,10 @@ class Quiz extends Component {
         ?(
           <View style={{marginTop:-70}}>
 
-              <View style={styles.indexContainer}>
-                <Text style={{color: white}}>{`${cardIdx + 1} / ${questions.length}`}</Text>
+              <View style={styles.numberOfPage}>
+                <Text style={{color: gray, fontSize:20}}>
+                    {`${cardIdx + 1} / ${questions.length}`}
+                </Text>
               </View>  
 
               <View style={styles.container}>
@@ -170,8 +172,8 @@ class Quiz extends Component {
                   </Animated.View >
                   
                   <TouchableOpacity onPress={()=> this.flipCard()}>
-                    <Text style={{textDecorationLine: 'underline', color: red}}>
-                      Flip {flipSide}!
+                    <Text style={{color: red, fontSize:16}}>
+                      Press to Flip-{flipSide}!
                     </Text>
                   </TouchableOpacity>
 
@@ -197,10 +199,15 @@ class Quiz extends Component {
               {(score / questions.length * 100).toFixed(0)} %
               </Animated.Text>
             <Text style={styles.underScoreTxt}>Correct!</Text>
-            <TouchableOpacity style={[styles.btn, styles.btnCorrect]} onPress={this.handleRestart}>
+
+            <TouchableOpacity style={[styles.btn, styles.btnCorrect]} 
+            onPress={this.handleRestart}>
               <Text style={styles.btnText}>Restart Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.btn, styles.btnBack]} onPress={() => navigation.navigate('DeckSetting') }>
+
+            <TouchableOpacity 
+              style={[styles.btn, styles.btnBack]} 
+              onPress={() => navigation.navigate('DeckSetting') }>
               <Text style={styles.btnBackText}>Back to Deck</Text>
             </TouchableOpacity>
           </View>
@@ -229,11 +236,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: blue,
+    backgroundColor: green,
     backfaceVisibility: 'hidden',
   },
   flipCardBack: {
-    backgroundColor: red,
+    backgroundColor: darkorange,
     position: "absolute",
     top: 0,
   },
@@ -250,9 +257,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 10
 },
-  indexContainer: {
+  numberOfPage: {
     marginTop: 1,
     marginLeft: 10,
+    marginBottom: 10,
   },
   btn: {
     borderRadius: 3,

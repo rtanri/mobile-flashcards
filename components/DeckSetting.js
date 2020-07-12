@@ -6,7 +6,7 @@ import { handleRemoveDeck } from '../actions/index'
 import { getDecks } from '../utils/api'
 
 import { purple, white, orange, red } from '../utils/colors'
-import CustomBtn from './CustomBtn'
+import TouchButton from './TouchButton'
 
 
 class DeckSetting extends Component{
@@ -38,7 +38,7 @@ class DeckSetting extends Component{
                 )}>
                     <Text style={styles.btnTextDark}>Add Card</Text>
                 </TouchableOpacity>
-                <CustomBtn 
+                <TouchButton 
                     onPress={() => navigation.navigate(
                         'Quiz',
                         {deckId: title}
