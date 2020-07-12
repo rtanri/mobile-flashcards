@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { StyleSheet,
          Text, 
          View, 
-         KeyboardAvoidingView } from 'react-native'
+         KeyboardAvoidingView 
+        } from 'react-native'
 import { connect } from 'react-redux'
 import { TextInput } from 'react-native-gesture-handler';
 import { handleAddDeck } from '../actions'
 
-import { purple, white, gray, orange, blue } from '../utils/colors'
+import { purple, white, gray } from '../utils/colors'
 import TouchButton from './TouchButton'
 
 
@@ -42,7 +43,7 @@ class NewDeck extends Component{
         const { input} = this.state
         return(
             <View style={styles.container}>
-            {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={[styles.header, {color: purple}]}>
                     Give your deck a title
                 </Text>
@@ -58,7 +59,7 @@ class NewDeck extends Component{
                     onPress={this.submitDeck}
                     disabled={input.length ===0? true : false} 
                     text="Create Deck"/>
-            {/* </KeyboardAvoidingView> */}
+            </KeyboardAvoidingView>
             </View>
 
         )

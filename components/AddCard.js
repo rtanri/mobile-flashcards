@@ -63,23 +63,16 @@ class AddCard extends Component{
       correctAns: answerOption ? 'true': 'false'
     };
 
-    // Update redux
     dispatch(addCard(card, deckId));
 
-    // save to AsyncStorage
     addCardToDeck(card, deckId);
 
-    // Navigate to DeckSetting
-    navigation.navigate(
-      "DeckSetting",
-      {title: deckId}
-    );
-      
+    // Navigate back to DeckSetting
+    navigation.navigate("DeckSetting",{title: deckId});  
   };
 
 
   render() {
-    // if(!deckId)
     const { front, back, answerOption } = this.state;
     const { title } = this.props;
     const disabled = front.length === 0 || back.length === 0 || answerOption === null;
