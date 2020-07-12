@@ -78,8 +78,7 @@ class Quiz extends Component {
   handleSelectClick = (selectedAns) =>{
     const { cardIdx, bounceScore} = this.state;
     const { questions } = this.props.deck;
-    const { correctAns } = questions[cardIdx];
-    const isCorrect = selectedAns === correctAns;
+    const isCorrect = selectedAns === 'true';
 
     if ( cardIdx + 1 === questions.length){
       this.setState((recentState) =>({
@@ -132,7 +131,7 @@ class Quiz extends Component {
     const { deck, navigation } = this.props;
     const { questions } = deck;
 
-    
+    //Flipcard animation
     const frontAnimatedStyle = {
       transform: [
         { rotateX: this.frontInterpolate }
@@ -151,6 +150,7 @@ class Quiz extends Component {
         ?(
           <View style={{marginTop:-70}}>
 
+              {/* current number of question */}
               <View style={styles.numberOfPage}>
                 <Text style={{color: gray, fontSize:20}}>
                     {`${cardIdx + 1} / ${questions.length}`}
@@ -159,26 +159,30 @@ class Quiz extends Component {
 
               <View style={styles.container}>
 
+                  {/* Card displaying QUESTION */}
                   <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
                     <Text style={styles.flipTextFront}>
                       {questions[cardIdx].question}
                     </Text>
                   </Animated.View >
 
+                  {/* Card displaying ANSWER */}
                   <Animated.View  style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
                     <Text style={styles.flipTextBack}>
                       {questions[cardIdx].answer}
                     </Text>
                   </Animated.View >
                   
+                  {/* Flip card button */}
                   <TouchableOpacity onPress={()=> this.flipCard()}>
                     <Text style={{color: red, fontSize:16}}>
                       Press to Flip-{flipSide}!
                     </Text>
                   </TouchableOpacity>
 
-                <View style={[{marginTop: 30}]}>
 
+                {/* Correct and Incorrect button */}
+                <View style={[{marginTop: 30}]}>
                   <TouchableOpacity style={[styles.btn, styles.btnCorrect]} onPress={() => this.handleSelectClick('true')}>
                     <Text style={styles.btnText}>Correct</Text>
                   </TouchableOpacity>
@@ -193,18 +197,20 @@ class Quiz extends Component {
 
         )
         :(
-          
+          //End Result with Score page
           <View style={styles.Scorecontainer}>
             <Animated.Text style={[styles.score, {transform: [{scale: bounceScore}] }]}>
               {(score / questions.length * 100).toFixed(0)} %
               </Animated.Text>
             <Text style={styles.underScoreTxt}>Correct!</Text>
 
+            {/* Restart button */}
             <TouchableOpacity style={[styles.btn, styles.btnCorrect]} 
             onPress={this.handleRestart}>
               <Text style={styles.btnText}>Restart Quiz</Text>
             </TouchableOpacity>
 
+            {/* Back button with navigation to DeckSetting page */}
             <TouchableOpacity 
               style={[styles.btn, styles.btnBack]} 
               onPress={() => navigation.navigate('DeckSetting') }>

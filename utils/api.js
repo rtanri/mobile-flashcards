@@ -9,21 +9,21 @@ const decks = {
         questions: [
         {
             id: '8xf0y6ziyjabvozdd253nd',
-            question: 'The Reason KFC Fried Chicken is so tasty is 11 Secret Herb and Spices',
+            question: 'What is the Reason KFC Fried Chicken is so tasty?',
             answer: '11 Secret Herb and Spices',
-            correctAns: 'true'
+            // correctAns: 'true'
         },
         {
             id: '6ni6ok3ym7mf1p33lnez',
-            question: 'Double McSpicy is the most favourite McDonalds Burger',
+            question: 'What is the most favourite McDonalds Burger in Singapore?',
             answer:  'Double McSpicy has been sold the most for the past 15 years',
-            correctAns: 'true'
+            // correctAns: 'true'
         },
         {
             id: 'is87yk3ym7mf1p33lnez',
-            question: 'Subway can help Obese to lose weight',
-            answer:  'Doctors like to recommend Obese to try Subway 30-days Challenge',
-            correctAns: 'true'
+            question: 'Who is the target customer of Subway sandwiches?',
+            answer:  'People with Obesity and Overweight',
+            // correctAns: 'true'
         }
     ]
     },
@@ -33,15 +33,15 @@ const decks = {
         questions: [
         {
             id: 'am8ehyc8byjqgar0jgpub9',
-            question: 'LIHO Bubble tea shop was established in 2001',
+            question: 'When was LIHO Bubble tea first established in Singapore?',
             answer: 'LIHO Bubble tea was established in 2017 by Royal T Group',
-            correctAns: 'false'
+            // correctAns: 'false'
         },
         {
             id: 'lok01k3ym7mf1p33lnez',
-            question: "The pearl in bubble tea contained the real clam's pearl.",
-            answer:  'The ingredients are corn starch, brown sugar and water',
-            correctAns: 'false'
+            question: "What is the main 2 ingredients of pearl in bubble-tea?",
+            answer:  'Corn starch, and brown sugar',
+            // correctAns: 'false'
         }
         ]
     }

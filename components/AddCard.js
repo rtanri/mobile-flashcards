@@ -13,23 +13,23 @@ import { connect } from 'react-redux';
 import { addCard } from '../actions';
 import {addCardToDeck} from '../utils/api';
 import TouchButton from './TouchButton';
-import RadioForm from 'react-native-simple-radio-button';
+// import RadioForm from 'react-native-simple-radio-button';
 import { FontAwesome } from '@expo/vector-icons'
 
 import { white, gray, purple, red, lightPurp, orange } from '../utils/colors';
 
 
 // Options for our radio button
-const answer_option = [
-  {label: 'False', value: 0},
-  {label: 'True', value: 1}
-];
+// const answer_option = [
+//   {label: 'False', value: 0},
+//   {label: 'True', value: 1}
+// ];
 
 class AddCard extends Component{
   state = {
     front:'',
     back: '',
-    answerOption: null,
+    // answerOption: null,
   };
   setTitle = (cardTitle) =>{
     this.props.navigation.setOptions({
@@ -45,22 +45,23 @@ class AddCard extends Component{
       this.setState({
         back: input
       });
-    }else if (flag === 'radio'){
-      this.setState({
-        answerOption: input.id
-      });
-        
     }
+    // else if (flag === 'radio'){
+    //   this.setState({
+    //     answerOption: input.id
+    //   });
+    // }
   };
+
   handleSubmit = () =>{
     const { dispatch, route, navigation } = this.props;
-    const { front, back, answerOption } = this.state;
+    const { front, back, /*answerOption*/ } = this.state;
     const { deckId } = route.params;
     
     const card = {
       question: front,
       answer: back,
-      correctAns: answerOption ? 'true': 'false'
+      // correctAns: answerOption ? 'true': 'false'
     };
 
     dispatch(addCard(card, deckId));
@@ -82,7 +83,7 @@ class AddCard extends Component{
       <View style={{flex: 1, backgroundColor: orange}} >
         <KeyboardAvoidingView style={styles.container}>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.label}>Front</Text>
+            <Text style={styles.label}>Question: </Text>
           </View>
           <View style={{ flexDirection: 'row', height: 40}}>
             <TextInput
@@ -92,7 +93,7 @@ class AddCard extends Component{
             />
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.label}>Back</Text>
+            <Text style={styles.label}>Answer: </Text>
           </View>
           <View style={{ flexDirection: 'row', height: 40}}>
             <TextInput
@@ -101,7 +102,7 @@ class AddCard extends Component{
               onChangeText={(input) => this.handleOnchange(input, 'back')}
             />
           </View>
-          <View style={{ flexDirection: 'row' }}>
+          {/* <View style={{ flexDirection: 'row' }}>
             <Text style={styles.labelans}>Is this true or false?</Text>
           </View>
           <View style={{ flexDirection: 'row', height: 40}}>
@@ -114,7 +115,7 @@ class AddCard extends Component{
                 labelStyle={{color: purple}}
                 animation={true}
                 onPress={(value) => this.handleOnchange(value, 'radio')} />
-          </View>
+          </View> */}
           <TouchButton
             onPress={this.handleSubmit}
             disabled= {disabled? true: false} 
@@ -154,15 +155,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'flex-start'
   },
-  labelans:{
-    alignItems: 'center', 
-    justifyContent: 'center',
-    fontSize: 20,
-    fontWeight: '500',
-    color: purple,
-    marginTop: 8,
-    marginBottom:10
-  },
+  // labelans:{
+  //   alignItems: 'center', 
+  //   justifyContent: 'center',
+  //   fontSize: 20,
+  //   fontWeight: '500',
+  //   color: purple,
+  //   marginTop: 8,
+  //   marginBottom:10
+  // },
   input: {
     flex: 0.8,
     alignItems: 'center',

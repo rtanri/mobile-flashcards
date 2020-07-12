@@ -4,13 +4,14 @@ You can create a deck with multiple question cards, and start a quiz with that.
 It's very good to for learning new languages, memorizing and playing for fun with friends
 
 
-### Installation
+### Platform & Installation
 
-This is developed with react-native platform. Please run few these commands in terminal to start the react-native applications:
+This is developed with react-native platform, and this app will work in iOS and Android devices or simulators. 
+
+Please run few these commands in terminal to start the react-native applications:
 * With npm: $ npm install && npm start,
 * With Yarn: $ yarn install && yarn start,
-* This application can be operated in platforms like iOS devices, iOS Simulator, Android devices, and Android Simulator.
-* If you find error in iOS dependencies, please install the pod by running this in terminal: $ cd ios && pod install
+* If you find error in iOS dependencies, you can try to install the pod by running this in terminal: $ cd ios && pod install
 
 
 ### How to Play
